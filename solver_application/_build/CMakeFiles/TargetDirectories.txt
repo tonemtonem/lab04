@@ -1,0 +1,12 @@
+/home/vboxuser/tonemtonem/workspace/lab03/solver_application/_build/CMakeFiles/solver_app.dir
+/home/vboxuser/tonemtonem/workspace/lab03/solver_application/_build/CMakeFiles/edit_cache.dir
+/home/vboxuser/tonemtonem/workspace/lab03/solver_application/_build/CMakeFiles/rebuild_cache.dir
+/home/vboxuser/tonemtonem/workspace/lab03/solver_application/_build/formatter_ex_lib_build/CMakeFiles/formatter_ex.dir
+/home/vboxuser/tonemtonem/workspace/lab03/solver_application/_build/formatter_ex_lib_build/CMakeFiles/edit_cache.dir
+/home/vboxuser/tonemtonem/workspace/lab03/solver_application/_build/formatter_ex_lib_build/CMakeFiles/rebuild_cache.dir
+/home/vboxuser/tonemtonem/workspace/lab03/solver_application/_build/formatter_ex_lib_build/formatter_lib_build/CMakeFiles/formatter.dir
+/home/vboxuser/tonemtonem/workspace/lab03/solver_application/_build/formatter_ex_lib_build/formatter_lib_build/CMakeFiles/edit_cache.dir
+/home/vboxuser/tonemtonem/workspace/lab03/solver_application/_build/formatter_ex_lib_build/formatter_lib_build/CMakeFiles/rebuild_cache.dir
+/home/vboxuser/tonemtonem/workspace/lab03/solver_application/_build/solver_lib_build/CMakeFiles/solver.dir
+/home/vboxuser/tonemtonem/workspace/lab03/solver_application/_build/solver_lib_build/CMakeFiles/edit_cache.dir
+/home/vboxuser/tonemtonem/workspace/lab03/solver_application/_build/solver_lib_build/CMakeFiles/rebuild_cache.dir
