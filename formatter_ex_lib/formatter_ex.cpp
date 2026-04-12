@@ -2,8 +2,8 @@
 #include <sstream>
 #include "formatter.h"
 
-std::ostream& formatter(const std::string& text)
+std::ostream& formatter(std::ostream& out const std::string& message)
 {
-    out<<text;
+    out<<message;
     return out;
 }
