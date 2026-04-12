@@ -9,8 +9,11 @@
 используйте AppVeyor для сборки на операционной системе Windows.
 
 добавлен [файл](https://github.com/tonemtonem/lab04/blob/main/.travis.yml) для сборки TravisCI
+
 добавлен [файл](https://github.com/tonemtonem/lab04/blob/main/appveyor.yml) для сборки AppVeyor
 
 
+
 [TravisCI](https://app.travis-ci.com/github/tonemtonem/lab04/builds/277899526?serverType=git)
+
 [AppVeyor](https://ci.appveyor.com/project/tonemtonem/lab04)
