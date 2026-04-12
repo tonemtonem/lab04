@@ -3,4 +3,4 @@
 #include <string>
 #include <iostream>
 
-std::string format_ex(const std::string& text);
+std::ostream& formatter(std::ostream& out, const std::string& message);

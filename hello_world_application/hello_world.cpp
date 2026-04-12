@@ -2,6 +2,6 @@
 #include <iostream>
 
 int main() {
-    std::cout << format_ex("Hello, World!") << std::endl;
+	formatter(std::cout, "Hello world");
     return 0;
 }
