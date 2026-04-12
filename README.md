@@ -14,6 +14,6 @@
 
 
 
-[TravisCI](https://app.travis-ci.com/github/tonemtonem/lab04/builds/277899526?serverType=git)
+Вывод [TravisCI](https://app.travis-ci.com/github/tonemtonem/lab04/builds/277899526?serverType=git)
 
-[AppVeyor](https://ci.appveyor.com/project/tonemtonem/lab04)
+Вывод [AppVeyor](https://ci.appveyor.com/project/tonemtonem/lab04)
