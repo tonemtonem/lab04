@@ -1,8 +1,8 @@
 #include "formatter_ex.h"
-
+#include <sstream>
 #include "formatter.h"
 
-std::ostream& formatter(std::ostream& out, const std::string& message)
+std::string format_ex(const std::string& text)
 {
-    return out << formatter(message);
+    return text;
 }

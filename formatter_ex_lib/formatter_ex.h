@@ -3,4 +3,4 @@
 #include <string>
 #include <iostream>
 
-std::ostream& format_ex(const std::string& text);
+std::string format_ex(const std::string& text);
