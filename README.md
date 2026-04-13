@@ -17,3 +17,5 @@
 Вывод [TravisCI](https://app.travis-ci.com/github/tonemtonem/lab04/builds/277899526?serverType=git)
 
 Вывод [AppVeyor](https://ci.appveyor.com/project/tonemtonem/lab04)
+
+Вывод[Github Actions](https://github.com/tonemtonem/lab04/actions/runs/24354369502)
