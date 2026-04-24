@@ -18,12 +18,12 @@ int main()
     {
         solve(a, b, c, x1, x2);
 
-        format_ex(std::cout, "x1 = " + std::to_string(x1));
-        format_ex(std::cout, "x2 = " + std::to_string(x2));
+        formatter(std::cout, "x1 = " + std::to_string(x1));
+        formatter(std::cout, "x2 = " + std::to_string(x2));
     }
     catch (const std::logic_error& ex)
     {
-        format_ex(std::cout, ex.what());
+        formatter(std::cout, ex.what());
     }
 
     return 0;
