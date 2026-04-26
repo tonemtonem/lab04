@@ -7,42 +7,53 @@ on:
     branches: [ main ]
 
 jobs:
-  linux-gcc:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Install CMake
-        run: sudo apt-get update && sudo apt-get install -y cmake
-        
-      - name: Configure
-        run: cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
-        
-      - name: Build
-        run: cmake --build _build
-        
-      - name: Test
-        run: |
-          cd _build
-          ./hello_world_application/hello_world_app
-          ./solver_application/solver_app
+  build:
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      matrix:
+        include:
+          # 🔹 Linux + GCC
+          - os: ubuntu-latest
+            compiler: gcc
+            cxx: g++
+            cc: gcc
+            install: sudo apt-get update && sudo apt-get install -y cmake
+            test_cmd: |
+              cd _build
+              ./hello_world_application/hello_world_app
+              ./solver_application/solver_app
+          
+          # 🔹 Linux + Clang
+          - os: ubuntu-latest
+            compiler: clang
+            cxx: clang++
+            cc: clang
+            install: sudo apt-get update && sudo apt-get install -y cmake clang
+            test_cmd: |
+              cd _build
+              ./hello_world_application/hello_world_app
+              ./solver_application/solver_app
+          
 
-  linux-clang:
-    runs-on: ubuntu-latest
+    name: ${{ matrix.os }} / ${{ matrix.compiler }}
+    
     steps:
       - uses: actions/checkout@v4
       
-      - name: Install Clang and CMake
-        run: sudo apt-get update && sudo apt-get install -y cmake clang
-        
-      - name: Configure
-        run: cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
+      - name: Install dependencies
+        if: matrix.install != ''
+        run: ${{ matrix.install }}
+      
+      - name: Configure CMake
+        run: cmake -S . -B _build -DCMAKE_INSTALL_PREFIX=_install ${{ matrix.generator || '' }}
         env:
-          CXX: clang++
-          CC: clang
-        
+          CXX: ${{ matrix.cxx }}
+          CC: ${{ matrix.cc }}
+      
       - name: Build
-        run: cmake --build _build
-        env:
-          CXX: clang++
-          CC: clang
+        run: cmake --build _build ${{ matrix.config_flag || '' }}
+      
+      - name: Test
+        if: matrix.test_cmd != ''
+        run: ${{ matrix.test_cmd }}
