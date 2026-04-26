@@ -1,0 +1,79 @@
+name: CI Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  linux-gcc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install CMake
+        run: sudo apt-get update && sudo apt-get install -y cmake
+        
+      - name: Configure
+        run: cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
+        
+      - name: Build
+        run: cmake --build _build
+        
+      - name: Test
+        run: |
+          cd _build
+          ./hello_world_application/hello_world_app
+          ./solver_application/solver_app
+
+  linux-clang:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install Clang and CMake
+        run: sudo apt-get update && sudo apt-get install -y cmake clang
+        
+      - name: Configure
+        run: cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
+        env:
+          CXX: clang++
+          CC: clang
+        
+      - name: Build
+        run: cmake --build _build
+        env:
+          CXX: clang++
+          CC: clang
+
+  windows-msvc:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Configure
+        run: cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install -G "Visual Studio 17 2022" -A x64
+        
+      - name: Build
+        run: cmake --build _build --config Release
+        
+      - name: Test
+        run: |
+          cd _build/Release
+          .\hello_world_application\hello_world_app.exe
+          .\solver_application\solver_app.exe
+
+  macos-clang:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install CMake
+        run: brew install cmake
+        
+      - name: Configure
+        run: cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
+        
+      - name: Build
+        run: cmake --build _build
