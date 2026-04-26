@@ -11,49 +11,45 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     strategy:
+      fail-fast: false
       matrix:
-        include:
-          # 🔹 Linux + GCC
-          - os: ubuntu-latest
-            compiler: gcc
-            cxx: g++
-            cc: gcc
-            install: sudo apt-get update && sudo apt-get install -y cmake
-            test_cmd: |
-              cd _build
-              ./hello_world_application/hello_world_app
-              ./solver_application/solver_app
-          
-          # 🔹 Linux + Clang
-          - os: ubuntu-latest
-            compiler: clang
-            cxx: clang++
-            cc: clang
-            install: sudo apt-get update && sudo apt-get install -y cmake clang
-            test_cmd: |
-              cd _build
-              ./hello_world_application/hello_world_app
-              ./solver_application/solver_app
-          
-
+        os: [ubuntu-latest]
+        compiler: [gcc, clang]
+    
     name: ${{ matrix.os }} / ${{ matrix.compiler }}
     
     steps:
       - uses: actions/checkout@v4
       
+      - name: Set variables for Linux GCC
+        if: matrix.os == 'ubuntu-latest' && matrix.compiler == 'gcc'
+        run: |
+          echo "CXX=g++" >> $GITHUB_ENV
+          echo "CC=gcc" >> $GITHUB_ENV
+          echo "INSTALL_CMD=sudo apt-get update && sudo apt-get install -y cmake" >> $GITHUB_ENV
+          echo "TEST_CMD=cd _build && ./hello_world_application/hello_world_app && ./solver_application/solver_app" >> $GITHUB_ENV
+      
+      - name: Set variables for Linux Clang
+        if: matrix.os == 'ubuntu-latest' && matrix.compiler == 'clang'
+        run: |
+          echo "CXX=clang++" >> $GITHUB_ENV
+          echo "CC=clang" >> $GITHUB_ENV
+          echo "INSTALL_CMD=sudo apt-get update && sudo apt-get install -y cmake clang" >> $GITHUB_ENV
+          echo "TEST_CMD=cd _build && ./hello_world_application/hello_world_app && ./solver_application/solver_app" >> $GITHUB_ENV
+      
       - name: Install dependencies
-        if: matrix.install != ''
-        run: ${{ matrix.install }}
+        if: env.INSTALL_CMD != ''
+        run: ${{ env.INSTALL_CMD }}
       
       - name: Configure CMake
-        run: cmake -S . -B _build -DCMAKE_INSTALL_PREFIX=_install ${{ matrix.generator || '' }}
+        run: cmake -S . -B _build -DCMAKE_INSTALL_PREFIX=_install
         env:
-          CXX: ${{ matrix.cxx }}
-          CC: ${{ matrix.cc }}
+          CXX: ${{ env.CXX }}
+          CC: ${{ env.CC }}
       
       - name: Build
-        run: cmake --build _build ${{ matrix.config_flag || '' }}
+        run: cmake --build _build
       
       - name: Test
-        if: matrix.test_cmd != ''
-        run: ${{ matrix.test_cmd }}
+        if: env.TEST_CMD != ''
+        run: ${{ env.TEST_CMD }}
