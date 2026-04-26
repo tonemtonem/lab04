@@ -8,48 +8,34 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
         compiler: [gcc, clang]
     
-    name: ${{ matrix.os }} / ${{ matrix.compiler }}
+    name: Ubuntu / ${{ matrix.compiler }}
     
     steps:
       - uses: actions/checkout@v4
       
-      - name: Set variables for Linux GCC
-        if: matrix.os == 'ubuntu-latest' && matrix.compiler == 'gcc'
-        run: |
-          echo "CXX=g++" >> $GITHUB_ENV
-          echo "CC=gcc" >> $GITHUB_ENV
-          echo "INSTALL_CMD=sudo apt-get update && sudo apt-get install -y cmake" >> $GITHUB_ENV
-          echo "TEST_CMD=cd _build && ./hello_world_application/hello_world_app && ./solver_application/solver_app" >> $GITHUB_ENV
-      
-      - name: Set variables for Linux Clang
-        if: matrix.os == 'ubuntu-latest' && matrix.compiler == 'clang'
-        run: |
-          echo "CXX=clang++" >> $GITHUB_ENV
-          echo "CC=clang" >> $GITHUB_ENV
-          echo "INSTALL_CMD=sudo apt-get update && sudo apt-get install -y cmake clang" >> $GITHUB_ENV
-          echo "TEST_CMD=cd _build && ./hello_world_application/hello_world_app && ./solver_application/solver_app" >> $GITHUB_ENV
-      
       - name: Install dependencies
-        if: env.INSTALL_CMD != ''
-        run: ${{ env.INSTALL_CMD }}
+        run: sudo apt-get update && sudo apt-get install -y cmake ${{ matrix.compiler }}
+      
+      - name: Set CXX
+        run: echo "CXX=${{ matrix.compiler }}++" >> $GITHUB_ENV
       
       - name: Configure CMake
         run: cmake -S . -B _build -DCMAKE_INSTALL_PREFIX=_install
         env:
           CXX: ${{ env.CXX }}
-          CC: ${{ env.CC }}
       
       - name: Build
         run: cmake --build _build
       
       - name: Test
-        if: env.TEST_CMD != ''
-        run: ${{ env.TEST_CMD }}
+        run: |
+          cd _build
+          ./hello_world_application/hello_world_app
+          ./solver_application/solver_app
