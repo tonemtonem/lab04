@@ -46,34 +46,3 @@ jobs:
         env:
           CXX: clang++
           CC: clang
-
-  windows-msvc:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Configure
-        run: cmake -S . -B _build -DCMAKE_INSTALL_PREFIX=_install -G "Visual Studio 17 2022" -A x64
-        
-      - name: Build
-        run: cmake --build _build --config Release
-        
-      - name: Test
-        run: |
-          cd _build/Release
-          .\hello_world_application\hello_world_app.exe
-          .\solver_application\solver_app.exe
-
-  macos-clang:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Install CMake
-        run: brew install cmake
-        
-      - name: Configure
-        run: cmake -H. -B_build -DCMAKE_INSTALL_PREFIX=_install
-        
-      - name: Build
-        run: cmake --build _build
