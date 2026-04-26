@@ -24,7 +24,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y cmake ${{ matrix.compiler }}
       
       - name: Set CXX
-        run: echo "CXX=${{ matrix.compiler }}++" >> $GITHUB_ENV
+        run: echo "CXX=${{ matrix.compiler == 'gcc' && 'g++' || 'clang++' }}" >> $GITHUB_ENV
       
       - name: Configure CMake
         run: cmake -S . -B _build -DCMAKE_INSTALL_PREFIX=_install
